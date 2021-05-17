@@ -10,7 +10,7 @@ public class FPSLog : MonoBehaviour
 {
     float timeTracker = 0f;
     int index = 0;
-    float[] fps = new float[10];
+    float[] fps = new float[60];
     List<string[]> data = new List<string[]>();
 
     // Start is called before the first frame update
@@ -46,8 +46,8 @@ public class FPSLog : MonoBehaviour
 
     private void LogFPS()
     {
-        Debug.Log(Time.time);
-        if (Time.time - timeTracker <= 10.0f)
+        //Debug.Log(Time.time);
+        if (Time.time - timeTracker <= 60.0f)
         {
             fps[index] = 1 / Time.deltaTime;
             data.Add(new string[] { Math.Round(fps[index], 1).ToString().Replace(",", ".")});
