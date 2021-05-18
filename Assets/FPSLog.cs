@@ -12,13 +12,13 @@ public class FPSLog : MonoBehaviour
     int index = 0;
     float[] fps = new float[60];
     List<string[]> data = new List<string[]>();
+    bool firstTime = true;
 
     // Start is called before the first frame update
     void Start()
     {
         data.Add(new string[] {"FPS"});
-        timeTracker = Time.time;
-        InvokeRepeating("LogFPS", 0f, 1f);
+        InvokeRepeating("LogFPS", 10.0f, 1f);
     }
 
     void SaveCSVFile(string path, List<string[]> data, string delimeter = ";")
@@ -46,6 +46,12 @@ public class FPSLog : MonoBehaviour
 
     private void LogFPS()
     {
+        if (firstTime)
+        {
+            timeTracker = Time.time;
+            firstTime = false;
+        }
+
         //Debug.Log(Time.time);
         if (Time.time - timeTracker <= 60.0f)
         {
@@ -57,7 +63,7 @@ public class FPSLog : MonoBehaviour
         {
             CancelInvoke();
             data.Add(new string[] {Math.Round(Average(fps), 1).ToString().Replace(",", ".")});
-            SaveCSVFile($"{Application.dataPath}/Vive_CSV_Files/Normal/Low.csv", data);
+            SaveCSVFile($"{Application.dataPath}/Vive_CSV_Files/Displacement/Huge.csv", data);
             #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
             #endif
